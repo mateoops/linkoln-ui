@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
+import validator from 'validator'
 import axios from 'axios';
 
 
 export default function App() {
   const [url, setUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
+  const [error, setError] = useState('');
+
+  const isValidUrl = (value) => {
+    return validator.isURL(value, {require_protocol: true})
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isValidUrl(url)) {
+      setError(true);
+      return;
+    }
+
+    setError(false);
+
     try {
       const response = await axios.post('http://localhost:8080/short/', {
         url,
       });
       setShortUrl(response.data.shortUrl);
     } catch (error) {
-      console.error('Error shortening URL:', error);
+      setError(true);
     }
   };
 
@@ -32,6 +46,8 @@ export default function App() {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           sx={{ mb: 2 }}
+          error={error}
+          helperText={error ? 'Please enter a valid URL including protocol.' : ''}
         />
         <Button
           type="submit"
