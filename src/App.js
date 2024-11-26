@@ -13,7 +13,7 @@ export default function App() {
       const response = await axios.post('http://localhost:8080/short/', {
         url,
       });
-      setShortUrl(response.data.shortUrl); // Assuming backend returns { shortUrl: "http://short.ly/abc123" }
+      setShortUrl(response.data.shortUrl);
     } catch (error) {
       console.error('Error shortening URL:', error);
     }
