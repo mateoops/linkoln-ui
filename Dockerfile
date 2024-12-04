@@ -1,5 +1,5 @@
 # Production Stage
-FROM nginx:latest
+FROM nginx:1.27.3
 
 # Copy the NGINX configuration file
 COPY nginx.conf /etc/nginx/conf.d/default.conf
