@@ -19,3 +19,10 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    repository: build
+    command: build
+    Dockerfile: Dockerfile
